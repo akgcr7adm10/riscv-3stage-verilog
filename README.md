@@ -49,10 +49,10 @@ The core was tested with a basic sequence of `addi`, `add`, and `nop` instructio
 
 | Instruction | Machine Code (Hex) | Target Register | Expected Value | Observed Value | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `addi x1, x0, 5` | `0x00500093` | `x1` | `5` (`0x00000005`) | `5` (`0x00000005`)[cite: 7, 8] | Verified |
-| `addi x2, x0, 10` | `0x00A00113` | `x2` | `10` (`0x0000000A`) | `10` (`0x0000000A`)[cite: 7, 8] | Verified |
-| `add x3, x1, x2` | `0x002081B3` | `x3` | `15` (`0x0000000F`) | `5` (`0x00000005`)[cite: 8] | Mismatch (Known Issue) |
-| `nop` | `0x00000013` | `x0` | `0` (`0x00000000`) | `0` (`0x00000000`)[cite: 6, 7, 8] | Verified |
+| `addi x1, x0, 5` | `0x00500093` | `x1` | `5` (`0x00000005`) | `5` (`0x00000005`)| Verified |
+| `addi x2, x0, 10` | `0x00A00113` | `x2` | `10` (`0x0000000A`) | `10` (`0x0000000A`) | Verified |
+| `add x3, x1, x2` | `0x002081B3` | `x3` | `15` (`0x0000000F`) | `5` (`0x00000005`) | Mismatch (Known Issue) |
+| `nop` | `0x00000013` | `x0` | `0` (`0x00000000`) | `0` (`0x00000000`) | Verified |
 
 ---
 

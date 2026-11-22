@@ -17,14 +17,14 @@ The processor divides instruction execution into three sequential pipeline stage
 
 | File | Description |
 | :--- | :--- |
-| `riscv_3stage_top.v` | Top-level module connecting the pipeline stages, register file, and memories[cite: 1] |
+| `riscv_3stage_top.v` | Top-level module connecting the pipeline stages, register file, and memories|
 | `fetch_stage.v` | Program Counter (`PC`) logic and instruction fetch stage |
 | `decode_execute_stage.v` | Instruction decoding, control logic, and ALU execution stage |
 | `memory_writeback_stage.v` | Memory interface and register write-back stage |
-| `register_file.v` | 32 × 32-bit general-purpose register file with `x0` hardwired to `0`[cite: 1] |
+| `register_file.v` | 32 × 32-bit general-purpose register file with `x0` hardwired to `0` |
 | `instruction_memory.v` | Read-only instruction memory preloaded with test instructions |
 | `data_memory.v` | Data memory module for load/store operations |
-| `riscv_3stage_tb.v` | Behavioral testbench driving clock, reset, and debug outputs (`pc_debug`, `alu_result_debug`)[cite: 1, 3] |
+| `riscv_3stage_tb.v` | Behavioral testbench driving clock, reset, and debug outputs (`pc_debug`, `alu_result_debug`) |
 
 *(Note: Adjust the file names in the table above if any of your uploaded `.v` modules use slightly different names.)*
 
@@ -33,19 +33,19 @@ The processor divides instruction execution into three sequential pipeline stage
 ## 3. Simulation & Tools
 
 * **HDL:** Verilog
-* **Simulator:** AMD Vivado Behavioral Simulator (`xsim`)[cite: 1]
+* **Simulator:** AMD Vivado Behavioral Simulator (`xsim`)
 * **Target Device:** Xilinx Artix-7 (`xc7a35tcpg236-1`)
 
 ### How to Run
 1. Open AMD Vivado and create a new RTL project targeting `xc7a35tcpg236-1`.
 2. Add all `.v` design files as **Design Sources** and `riscv_3stage_tb.v` as a **Simulation Source**[cite: 1].
-3. Run **Behavioral Simulation** (`sim_1`)[cite: 1] and inspect `pc_debug`, `alu_result_debug`, and internal `register_file` values[cite: 1, 3].
+3. Run **Behavioral Simulation** (`sim_1`) and inspect `pc_debug`, `alu_result_debug`, and internal `register_file` values.
 
 ---
 
 ## 4. Baseline Verification Results
 
-The core was tested with a basic sequence of `addi`, `add`, and `nop` instructions on a `10 ns` clock period[cite: 4, 8]:
+The core was tested with a basic sequence of `addi`, `add`, and `nop` instructions on a `10 ns` clock period:
 
 | Instruction | Machine Code (Hex) | Target Register | Expected Value | Observed Value | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- |

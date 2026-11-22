@@ -1,49 +1,21 @@
-# 3-Stage Pipelined RISC-V Core (Verilog)
+MIT License
 
-My first processor design project—a basic 3-stage pipelined RISC-V core written in Verilog and simulated in AMD Vivado (`xsim`) for a Xilinx Artix-7 (`xc7a35tcpg236-1`).
+Copyright (c) 2026 <Your Name>
 
-I built this to get hands-on experience with how a pipelined datapath actually moves instructions, how control signals line up across clock cycles, and how to debug waveforms in Vivado.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
----
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-## How It Works
-
-The pipeline splits execution into three stages:
-* **Fetch (`fetch_stage.v`):** Updates the `PC` and pulls 32-bit instructions from `instruction_memory.v`.
-* **Decode / Execute (`decode_execute_stage.v`):** Decodes the instruction, reads `rs1` and `rs2` from `register_file.v`, and runs the ALU.
-* **Memory / Write-Back (`memory_writeback_stage.v`):** Connects to `data_memory.v` and writes the result back to `rd`.
-
-`riscv_3stage_top.v` ties everything together, and `riscv_3stage_tb.v` drives the clock, reset, and debug signals (`pc_debug`, `alu_result_debug`) during simulation[cite: 1, 3].
-
----
-
-## Running the Simulation
-
-1. Create a new RTL project in Vivado targeting `xc7a35tcpg236-1`.
-2. Add all the `.v` design files under **Design Sources** and `riscv_3stage_tb.v` under **Simulation Sources**.
-3. Run **Behavioral Simulation** (`sim_1`)[cite: 1] and check `pc_debug`, `alu_result_debug`, and the internal registers inside `register_file`[cite: 1, 3].
-
----
-
-## What I Tested (Baseline Waveform)
-
-I ran a small test sequence on a `10 ns` clock[cite: 4, 8] to check basic register writes:
-
-| Instruction | Hex | Target | Expected | Observed | Notes |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| `addi x1, x0, 5` | `0x00500093` | `x1` | `5` (`0x00000005`) | `5` (`0x00000005`)[cite: 7, 8] | Works as expected |
-| `addi x2, x0, 10` | `0x00A00113` | `x2` | `10` (`0x0000000A`) | `10` (`0x0000000A`)[cite: 7, 8] | Works as expected |
-| `add x3, x1, x2` | `0x002081B3` | `x3` | `15` (`0x0000000F`) | `5` (`0x00000005`)[cite: 8] | Pipeline hazard/operand issue |
-| `nop` | `0x00000013` | `x0` | `0` (`0x00000000`) | `0` (`0x00000000`)[cite: 6, 7, 8] | `x0` stays zero |
-
-![Vivado Waveform](waveform_registers.png)
-
-*(Replace `waveform_registers.png` with whatever filename you upload for your screenshot.)*
-
----
-
-## What I Learned & Known Issues
-
-* **`add` writes `5` instead of `15`:** When `add x3, x1, x2` runs right after the `addi` instructions, `x3` ends up with `5` instead of `15`[cite: 8] because there is no forwarding or stall logic yet to handle back-to-back data dependencies.
-* **`X` values at the end:** Once the `PC` moves past the loaded instructions (around `74.5 ns`), uninitialized memory locations propagate `X` through the pipeline[cite: 7, 8].
-* **Next steps:** Leaving this repo as my baseline v1 build and taking what I learned about pipeline timing and hazards into my next, more complete processor project.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
